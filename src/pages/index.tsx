@@ -20,7 +20,6 @@ const Home: React.FC = () => {
     <Flex flex="1" justifyContent="center">
       <Flex
         direction="column"
-        h="100%"
         w="100%"
         borderRadius="md"
         p="2"

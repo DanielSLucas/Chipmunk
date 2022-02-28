@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-array-index-key */
 import {
   Button,
@@ -5,8 +6,13 @@ import {
   Heading,
   Icon,
   Spinner,
-  Stack,
+  Table,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -15,10 +21,19 @@ import { useRecoilValue } from 'recoil';
 import { humanInputState } from '../atoms/attributesAtom';
 import { serializedDataState } from '../atoms/serializedDataAtom';
 
+type DecisionItem = {
+  priority: number;
+  isTheBestDecision: boolean;
+  [key: string]: any;
+};
+
 const Results: React.FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [decision, setDecision] = useState<Record<string, string | number>>({});
+  const [decision, setDecision] = useState<DecisionItem[]>([]);
+  const [decisionItemAttributes, setDecisionItemAttributes] = useState<
+    string[]
+  >([]);
 
   const serializedData = useRecoilValue(serializedDataState);
   const humanInput = useRecoilValue(humanInputState);
@@ -41,7 +56,23 @@ const Results: React.FC = () => {
       return jsonResponse;
     };
 
-    getDecision().then(response => setDecision(response));
+    const getObjAttributes = (arr: any[]) => {
+      const attribs = Object.keys(arr[0]);
+
+      const priorityAttIndex = attribs.findIndex(
+        attrib => attrib === 'priority',
+      );
+
+      attribs.splice(priorityAttIndex, 1);
+
+      return ['priority', ...attribs];
+    };
+
+    getDecision().then(response => {
+      setDecisionItemAttributes(getObjAttributes(response));
+      setDecision(response);
+    });
+
     setIsLoading(false);
   }, [humanInput, serializedData]);
 
@@ -49,15 +80,10 @@ const Results: React.FC = () => {
     router.push('/prioridades');
   }, [router]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <Flex flex="1" justifyContent="center">
       <Flex
         direction="column"
-        h="100%"
         w="100%"
         borderRadius="md"
         p="2"
@@ -69,24 +95,59 @@ const Results: React.FC = () => {
           <Text mt="2">A melhor escolha com base no que você informou:</Text>
         </Flex>
 
-        <Flex direction="column" bg="white" p="4" mt="4" borderRadius="md">
-          <Heading as="h3">{decision[Object.keys(decision)[0]]}</Heading>
+        <Flex
+          bg="white"
+          p="2"
+          mt="4"
+          borderRadius="md"
+          w="100%"
+          position="relative"
+          overflow="auto"
+        >
           {isLoading ? (
             <Spinner />
           ) : (
-            <Stack mt="4" spacing="8px">
-              {Object.keys(decision).map((key, i) => {
-                if (i === 0) {
-                  return null;
-                }
-                return (
-                  <Flex alignItems="center" key={`${key}-[${i}]`}>
-                    <Text fontWeight="medium">{key}:</Text>
-                    <Text ml="2"> {decision[key]}</Text>
-                  </Flex>
-                );
-              })}
-            </Stack>
+            <Table variant="simple" size="sm">
+              <Thead>
+                <Tr>
+                  {decisionItemAttributes.map((attribute, i) => {
+                    if (attribute === 'isTheBestDecision') return null;
+
+                    return <Th key={`${attribute}[${i}]`}>{attribute}</Th>;
+                  })}
+                </Tr>
+              </Thead>
+              <Tbody>
+                {decision.map((item, i) => {
+                  return (
+                    <Tr
+                      bg={item.isTheBestDecision ? 'green.100' : 'inherit'}
+                      color={item.isTheBestDecision ? 'green.800' : 'inherit'}
+                      fontWeight={item.isTheBestDecision ? 'bold' : 'inherit'}
+                      key={`${item}-[${i}]`}
+                    >
+                      {decisionItemAttributes.map((attribute, j) => {
+                        if (attribute === 'isTheBestDecision') return null;
+
+                        const value =
+                          attribute === 'priority'
+                            ? `${Number(item[attribute] * 100).toFixed(2)}%`
+                            : item[attribute];
+
+                        return (
+                          <Td
+                            key={`${item}[${attribute}]-[${i}][${j}]`}
+                            isNumeric={Number.isInteger(value)}
+                          >
+                            {value}
+                          </Td>
+                        );
+                      })}
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
           )}
         </Flex>
 

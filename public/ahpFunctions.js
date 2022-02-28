@@ -237,17 +237,25 @@ function ponderation (comparisonTable) {
 }
 
 /**
+ * Decision result
+ * @param {*} priorities
+ * @param {*} ponderationInfo
+ * @param {*} serializedItems
+ * @returns
+ */
+
+/**
  * Decides, based on the inputs, which option is the best.
  * @param {PonderationResults[]} attributesInfo - The ponderation info for each attribute.
  * @param {PonderationResults} ponderationInfo - The ponderation info for the human input.
  * @param {SerializedData["serializedItems"]} serializedItems - The list of the options serialized as an object.
- * @returns {Object} The best option base on the inputs and the AHP method.
+ * @returns {Object[]} An array ordered by priority, starting by the best decision to the worst.
  */
 function decide(attributesInfo, ponderationInfo, serializedItems) {
   const attributesPriorities = attributesInfo.map( item => item.priorities);
   const { priorities: ponderationPriorities } = ponderationInfo;
 
-  const final = attributesPriorities.map((param, i) => {
+  const finalPriorities = attributesPriorities.map((param, i) => {
     let total =0;
 
     attributesPriorities.forEach((item, j) => {
@@ -256,9 +264,19 @@ function decide(attributesInfo, ponderationInfo, serializedItems) {
     return total;
   })
 
-  const descisionIndex = final.indexOf(max(final));
+  const decisionIndex = finalPriorities.indexOf(max(finalPriorities));
 
-  return serializedItems[descisionIndex];
+  const itemsWithPrioties = serializedItems.map((item, i) => {
+    return {
+      ...item,
+      priority: finalPriorities[i],
+      isTheBestDecision: decisionIndex === i,
+    }
+  });
+
+  const itemsSortedByPriority = itemsWithPrioties.sort((a,b) => b.priority - a.priority);
+
+  return itemsSortedByPriority;
 }
 
 /**
@@ -274,16 +292,16 @@ function decide(attributesInfo, ponderationInfo, serializedItems) {
  * provided and human input.
  * @param {any[][]} data
  * @param {HumanInput} humanInput
- * @returns {Object} The best option base on the inputs and the AHP method.
+ * @returns {Object[]} An array ordered by priority, starting by the best decision to the worst.
  */
 function ahp(serializedData, humanInput) {
   const ponderationInfo = ponderation(humanInput.attributesPrioritiesTable);
 
-  const attributesInfo = getAttributesInfo(serializedData, humanInput.attributesInfo);
+  const attributesInfo = getAttributesInfo(serializedData, humanInput.attributes);
 
-  const descision = decide(attributesInfo, ponderationInfo, serializedData.serializedItems);
+  const decision = decide(attributesInfo, ponderationInfo, serializedData.serializedItems);
 
-  return descision;
+  return decision;
 }
 
 module.exports = {

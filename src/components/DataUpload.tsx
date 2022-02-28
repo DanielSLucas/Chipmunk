@@ -45,7 +45,7 @@ const DataUpload: React.FC = () => {
 
       setSerializedData(jsonResponse);
 
-      const attributes = Object.keys(jsonResponse.attributeValues);
+      const attributes = Object.keys(jsonResponse.attributesValues);
       attributes.shift();
 
       setAttributesNames(attributes);
