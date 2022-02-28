@@ -1,13 +1,13 @@
 import { atom } from 'recoil';
 
-type AtributeInfo = {
+type Attribute = {
   name: string;
   betterWhen: 'greater' | 'lesser';
 };
 
 type HumanInput = {
   attributesPrioritiesTable: number[][];
-  attributesInfo: AtributeInfo[];
+  attributes: Attribute[];
 };
 
 type IPriorityType = 'superior' | 'inferior';
@@ -17,13 +17,13 @@ export const attributesPrioritiesState = atom<number[][]>({
   default: [],
 });
 
-export const attributesState = atom<string[]>({
-  key: 'attributesState',
+export const attributesNamesState = atom<string[]>({
+  key: 'attributesNamesState',
   default: [],
 });
 
-export const attributesInfoState = atom<AtributeInfo[]>({
-  key: 'attributesInfoState',
+export const attributesState = atom<Attribute[]>({
+  key: 'attributesState',
   default: [],
 });
 

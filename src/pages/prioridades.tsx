@@ -16,7 +16,7 @@ import React, { useCallback } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  attributesInfoState,
+  attributesState,
   attributesPrioritiesState,
   humanInputState,
 } from '../atoms/attributesAtom';
@@ -25,7 +25,7 @@ import PrioritiesForm from '../components/PrioritiesForm';
 
 const Priorities: React.FC = () => {
   const attributesPrioritiesTable = useRecoilValue(attributesPrioritiesState);
-  const attributesInfo = useRecoilValue(attributesInfoState);
+  const attributes = useRecoilValue(attributesState);
   const [, setHumanInput] = useRecoilState(humanInputState);
 
   const router = useRouter();
@@ -36,12 +36,12 @@ const Priorities: React.FC = () => {
 
   const handleNext = useCallback(() => {
     setHumanInput({
-      attributesInfo,
+      attributes,
       attributesPrioritiesTable,
     });
 
     router.push('/resultado');
-  }, [router, attributesInfo, attributesPrioritiesTable, setHumanInput]);
+  }, [router, attributes, attributesPrioritiesTable, setHumanInput]);
 
   const isTheFormFilled = !attributesPrioritiesTable
     .map(row => {

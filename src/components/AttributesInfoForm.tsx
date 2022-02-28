@@ -3,15 +3,14 @@
 import { Flex, Text, Tag, Box, Select, Stack } from '@chakra-ui/react';
 import React, { useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { attributesInfoState, attributesState } from '../atoms/attributesAtom';
+import { attributesState, attributesNamesState } from '../atoms/attributesAtom';
 
 type BetterWhen = 'greater' | 'lesser' | string;
 type Fields = 'betterWhen' | 'name';
 
 const AttributesInfoForm: React.FC = () => {
-  const attributes = useRecoilValue(attributesState);
-  const [attributesInfo, setAttributesInfo] =
-    useRecoilState(attributesInfoState);
+  const attributes = useRecoilValue(attributesNamesState);
+  const [attributesInfo, setAttributesInfo] = useRecoilState(attributesState);
 
   useEffect(() => {
     if (Object.keys(attributesInfo).length === 0) {

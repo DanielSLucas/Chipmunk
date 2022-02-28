@@ -7,7 +7,7 @@ import { FiFileText } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 import {
   attributesPrioritiesState,
-  attributesState,
+  attributesNamesState,
   prioritiesTypesState,
 } from '../atoms/attributesAtom';
 
@@ -18,7 +18,7 @@ const DataUpload: React.FC = () => {
   const [file, setFile] = useState({} as File);
   const [, setSerializedData] = useRecoilState(serializedDataState);
   const [, setAttributesPriorities] = useRecoilState(attributesPrioritiesState);
-  const [, setAttributes] = useRecoilState(attributesState);
+  const [, setAttributesNames] = useRecoilState(attributesNamesState);
   const [, setPrioritiesTypes] = useRecoilState(prioritiesTypesState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,7 +48,7 @@ const DataUpload: React.FC = () => {
       const attributes = Object.keys(jsonResponse.attributeValues);
       attributes.shift();
 
-      setAttributes(attributes);
+      setAttributesNames(attributes);
 
       const initialAttributesPriorities = attributes.map((_item1, i) => {
         return attributes.map((_item2, j) => {
@@ -76,7 +76,7 @@ const DataUpload: React.FC = () => {
     setSerializedData,
     setAttributesPriorities,
     setPrioritiesTypes,
-    setAttributes,
+    setAttributesNames,
     toast,
   ]);
 

@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   attributesPrioritiesState,
-  attributesState,
+  attributesNamesState,
   prioritiesTypesState,
 } from '../atoms/attributesAtom';
 import AttributePriorityForm from './AttributePriorityForm';
@@ -12,7 +12,7 @@ import AttributePriorityForm from './AttributePriorityForm';
 type IPriorityType = 'superior' | 'inferior';
 
 const PrioritiesForm: React.FC = () => {
-  const attributes = useRecoilValue(attributesState);
+  const attributes = useRecoilValue(attributesNamesState);
   const [attributesPriorities, setAttributesPriorities] = useRecoilState(
     attributesPrioritiesState,
   );

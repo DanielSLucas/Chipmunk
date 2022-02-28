@@ -1,27 +1,45 @@
+/**
+ * Random index based on array order
+ */
 const RI = [ 0, 0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59];
 
+/**
+ * Returns the greatest number in an array of numbers.
+ * @param {number[]} arr - An array of numbers.
+ * @returns {number} The greatest number in the provided array.
+ */
 function max(arr) {
-  let max;
+  let greatestNum;
 
   arr.forEach((item, i) => {
-    if (i === 0) max = item;
-    if (item > max) max = item;
+    if (i === 0) greatestNum = item;
+    if (item > greatestNum) greatestNum = item;
   });
 
-  return max;
+  return greatestNum;
 }
 
+/**
+ * Returns the smallest number in an array of numbers.
+ * @param {number[]} arr - An array of numbers.
+ * @returns {number} The smallest number in the provided array.
+ */
 function min(arr) {
-  let min;
+  let smallestNum;
 
   arr.forEach((item, i) => {
-    if (i === 0) min = item;
-    if (item < min) min = item;
+    if (i === 0) smallestNum = item;
+    if (item < smallestNum) smallestNum = item;
   });
 
-  return min;
+  return smallestNum;
 }
 
+/**
+ * Parses a csv file into an array.
+ * @param {string} data - The path to the file.
+ * @returns {any[][]} Array containing the csv data.
+ */
 function parseCSV(data) {
   const rows = data.split('\n');
 
@@ -30,6 +48,19 @@ function parseCSV(data) {
   return parsedCSV;
 }
 
+/**
+ * Object containing the serialized data from a table.
+ * @typedef {Object} SerializedData
+ * @property {Object} attributesValues - Contains an array of values for each attribute of the original table.
+ * @property {Object[]} serializedItems - An array containing table rows serialized as an object.
+ */
+
+/**
+ * Serializes data from a array (table), returning an object with all the values
+ * for each attribute and each row serialized as an object.
+ * @param {any[][]} data - Array containing the table data to be serialized.
+ * @returns {SerializedData} Object containing the serialized data from a table.
+ */
 function serializeData(data) {
   const dataCopy = Array.from(data);
 
@@ -37,7 +68,7 @@ function serializeData(data) {
 
   dataCopy.shift();
 
-  const attributeValues = {};
+  const attributesValues = {};
 
   const serializedItems = dataCopy.map(row => {
     const item = {};
@@ -47,10 +78,10 @@ function serializeData(data) {
       const value = Number.isNaN(Number(row[i])) ? row[i] : Number(row[i]);
 
 
-      if (!attributeValues[key]) {
-        attributeValues[key] = [value];
+      if (!attributesValues[key]) {
+        attributesValues[key] = [value];
       } else {
-        attributeValues[key].push(value);
+        attributesValues[key].push(value);
       }
 
 
@@ -61,19 +92,32 @@ function serializeData(data) {
   });
 
   return {
-    attributeValues,
+    attributesValues,
     serializedItems
   };
 }
 
+/**
+ * Object containing attribute info
+ * @typedef {Object} Attribute
+ * @property {string} name - Attribute name
+ * @property {'greater' | 'lesser'} betterWhen - Tell when the attribute is better
+ */
+
+/**
+ * Get the ponderation for each attribute informed
+ * @param {SerializedData} data - Array containing the table data to be serialized.
+ * @param {Attribute[]} attributes - Array containing attributes info
+ * @returns {(Attribute & PonderationResults)[]} An array with de ponderation info for each attribute informed.
+ */
 function getAttributesInfo(data, attributes) {
   return attributes.map(atrb => {
-    const currentAttributeValues = data.attributeValues[atrb.name]
+    const currentAttributeValues = data.attributesValues[atrb.name]
     const highestDif = max(currentAttributeValues) - min(currentAttributeValues);
 
     const comparisonTable = data.serializedItems.map((opt1) => {
       return data.serializedItems.map((opt2) => {
-        return getSaatyScaleGrade(highestDif, opt1[atrb.name], opt2[atrb.name], atrb.betterWhen);
+        return getSaatyScaleScore(highestDif, opt1[atrb.name], opt2[atrb.name], atrb.betterWhen);
       });
     });
 
@@ -84,36 +128,59 @@ function getAttributesInfo(data, attributes) {
   });
 }
 
-function getSaatyScaleGrade(highestDif, op1Value, op2Value, betterWhen) {
+/**
+ * Compares two options and gives the score based on the saaty scale.
+ * @param {number} highestDif - The best option value minus the worst option value.
+ * @param {number} op1Value - Option one value.
+ * @param {number} op2Value - Option two value.
+ * @param {'greater' | 'lesser'} betterWhen - Tells if the attribute value that is beeing compared is better when lesser or greater.
+ * @returns {number} The score based on the saaty scale.
+ */
+function getSaatyScaleScore(highestDif, op1Value, op2Value, betterWhen) {
   const saatyScale = [1,3,5,7,9];
 
   const num = op1Value > op2Value ?  op1Value - op2Value : op2Value - op1Value;
 
-  const grade = (num*9)/highestDif;
+  const score = (num*9)/highestDif;
 
-  if (saatyScale.includes(grade)) {
-    return grade;
-  }
-
-  let scaleGrade=1;
+  let saatyScaleScore=1;
 
   saatyScale.forEach((item, i) => {
-    if (grade > item) {
-      scaleGrade = saatyScale[i+1]
+    if (score > item) {
+      saatyScaleScore = saatyScale[i+1]
     }
   });
 
   if (betterWhen === 'greater' && op1Value < op2Value) {
-    return 1/scaleGrade;
+    return 1/saatyScaleScore;
   }
 
   if (betterWhen === 'lesser' && op1Value > op2Value) {
-    return 1/scaleGrade;
+    return 1/saatyScaleScore;
   }
 
-  return scaleGrade;
+  return saatyScaleScore;
 }
 
+/**
+ * Object with all the properties returned from ponderation function.
+ * @typedef {Object} PonderationResults
+ * @property {number[][]} comparisonTable - Table with comparisons between provided options.
+ * @property {number[]} sums - The sum total for each column of the comparisonTable.
+ * @property {number[]} priorities - The priority from each item (row) in the comparisonTable.
+ * @property {number} lambdaMax - The result of the division of the totalConsistency by the number of attributes beeing compared.
+ * @property {number[]} consistency - The result of dividing the priority of each row of the 'comparisonTable' by the sum of multiplying each item (of the respective row) by its priority.
+ * @property {number} totalConsistency - The sum of all consistencies.
+ * @property {number} ci - Consistency index, the result of dividing the lambdaMax minus the number of attributes by the number of attributes minus 1.
+ * @property {number} cr - Consistency ratio, the result of dividing the CI by the RI (ramdom index - based in the array order).
+ * @property {boolean} isConsistent - Tells if the result is consitent.
+ */
+
+/**
+ * Do all the math for the given comparison table.
+ * @param {any[][]} comparisonTable
+ * @returns {PonderationResults} Object with all the properties returned from ponderation function.
+ */
 function ponderation (comparisonTable) {
   const totalNumOfttributes = comparisonTable[0].length;
 
@@ -138,7 +205,7 @@ function ponderation (comparisonTable) {
     return result;
   });
 
-  const consistence = comparisonTable.map((row, i) => {
+  const consistency = comparisonTable.map((row, i) => {
     let total = 0;
 
     row.forEach((item, j) => {
@@ -148,9 +215,9 @@ function ponderation (comparisonTable) {
     return total/priorities[i];
   });
 
-  const totalConsistence = consistence.reduce((acc, cur) => acc + cur, 0)
+  const totalConsistency = consistency.reduce((acc, cur) => acc + cur, 0)
 
-  const lambdaMax = totalConsistence/totalNumOfttributes;
+  const lambdaMax = totalConsistency/totalNumOfttributes;
 
   const ci = (lambdaMax - totalNumOfttributes)/ (totalNumOfttributes-1);
 
@@ -161,15 +228,21 @@ function ponderation (comparisonTable) {
     sums,
     priorities,
     lambdaMax,
-    consistence,
-    totalConsistence,
+    consistency,
+    totalConsistency,
     ci,
     cr,
     isConsistent: cr < 0.1,
   };
 }
 
-
+/**
+ * Decides, based on the inputs, which option is the best.
+ * @param {PonderationResults[]} attributesInfo - The ponderation info for each attribute.
+ * @param {PonderationResults} ponderationInfo - The ponderation info for the human input.
+ * @param {SerializedData["serializedItems"]} serializedItems - The list of the options serialized as an object.
+ * @returns {Object} The best option base on the inputs and the AHP method.
+ */
 function decide(attributesInfo, ponderationInfo, serializedItems) {
   const attributesPriorities = attributesInfo.map( item => item.priorities);
   const { priorities: ponderationPriorities } = ponderationInfo;
@@ -188,7 +261,21 @@ function decide(attributesInfo, ponderationInfo, serializedItems) {
   return serializedItems[descisionIndex];
 }
 
+/**
+ * Info that must be informed by some one.
+ * @typedef {Object} HumanInput
+ * @property {number[][]} attributesPrioritiesTable
+ * @property {Attribute[]} attributes
+ */
 
+
+/**
+ * Uses AHP (Analytic Hierarchy Process) to make a decision based on the data
+ * provided and human input.
+ * @param {any[][]} data
+ * @param {HumanInput} humanInput
+ * @returns {Object} The best option base on the inputs and the AHP method.
+ */
 function ahp(serializedData, humanInput) {
   const ponderationInfo = ponderation(humanInput.attributesPrioritiesTable);
 
