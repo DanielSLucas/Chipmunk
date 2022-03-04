@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 
 type Attribute = {
+  index: number;
   name: string;
   betterWhen: 'greater' | 'lesser';
 };

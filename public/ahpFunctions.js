@@ -129,6 +129,23 @@ function getAttributesInfo(data, attributes) {
 }
 
 /**
+ * Create the attributes Priotity Table
+ * @param {string[]} attributes
+ * @param {string[]} rankedAttributes
+ * @returns {number[][]}
+ */
+ function createAttributesPriotityTable(attributes, rankedAttributes) {
+  return attributes.map((attributeRow) => {
+    return attributes.map((attributeCol)=> {
+      const attributeRowValue = rankedAttributes.findIndex(attribute => attribute === attributeRow) + 1;
+      const attributeColValue = rankedAttributes.findIndex(attribute => attribute === attributeCol) + 1;
+      const highestDif = rankedAttributes.length - 1;
+      return getSaatyScaleScore(highestDif, attributeRowValue, attributeColValue, 'lesser');
+    });
+  });
+}
+
+/**
  * Compares two options and gives the score based on the saaty scale.
  * @param {number} highestDif - The best option value minus the worst option value.
  * @param {number} op1Value - Option one value.
@@ -306,6 +323,7 @@ function ahp(serializedData, humanInput) {
 
 module.exports = {
   parseCSV,
+  createAttributesPriotityTable,
   serializeData,
   ahp,
 }

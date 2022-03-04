@@ -81,7 +81,7 @@ const PrioritiesForm: React.FC = () => {
       border="1px solid"
       borderColor="gray.300"
       borderRadius="md"
-      h="md"
+      h="22rem"
       overflowY="scroll"
     >
       <Stack direction="column" position="relative" spacing="4">

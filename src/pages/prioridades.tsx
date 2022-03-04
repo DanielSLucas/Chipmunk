@@ -15,13 +15,15 @@ import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
 import {
   attributesState,
   attributesPrioritiesState,
   humanInputState,
 } from '../atoms/attributesAtom';
-import AttributesInfoForm from '../components/AttributesInfoForm';
+
 import PrioritiesForm from '../components/PrioritiesForm';
+import RankAttributes from '../components/RankAttributes';
 
 const Priorities: React.FC = () => {
   const attributesPrioritiesTable = useRecoilValue(attributesPrioritiesState);
@@ -35,8 +37,12 @@ const Priorities: React.FC = () => {
   }, [router]);
 
   const handleNext = useCallback(() => {
+    const attributesInfo = Array.from(attributes).sort(
+      (a, b) => a.index - b.index,
+    );
+
     setHumanInput({
-      attributes,
+      attributes: attributesInfo,
       attributesPrioritiesTable,
     });
 
@@ -64,13 +70,13 @@ const Priorities: React.FC = () => {
             <h3>
               <AccordionButton bg="white">
                 <Box flex="1" textAlign="left">
-                  Informações sobre os atributos
+                  Rakeamento de atributos
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h3>
             <AccordionPanel pb={4}>
-              <AttributesInfoForm />
+              <RankAttributes />
             </AccordionPanel>
           </AccordionItem>
 
@@ -78,7 +84,7 @@ const Priorities: React.FC = () => {
             <h3>
               <AccordionButton bg="white">
                 <Box flex="1" textAlign="left">
-                  Comparações entre atributos
+                  Comparações detalhada entre atributos
                 </Box>
                 <AccordionIcon />
               </AccordionButton>

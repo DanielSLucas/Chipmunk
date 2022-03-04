@@ -13,10 +13,11 @@ const AttributesInfoForm: React.FC = () => {
   const [attributesInfo, setAttributesInfo] = useRecoilState(attributesState);
 
   useEffect(() => {
-    if (Object.keys(attributesInfo).length === 0) {
+    if (attributesInfo.length === 0) {
       setAttributesInfo(
-        attributes.map(attribute => {
+        attributes.map((attribute, i) => {
           return {
+            index: i,
             name: attribute,
             betterWhen: 'greater',
           };
