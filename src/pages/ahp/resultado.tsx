@@ -18,8 +18,8 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
-import { humanInputState } from '../atoms/attributesAtom';
-import { serializedDataState } from '../atoms/serializedDataAtom';
+import { humanInputState } from '../../atoms/attributesAtom';
+import { serializedDataState } from '../../atoms/serializedDataAtom';
 
 type DecisionItem = {
   priority: number;
@@ -77,7 +77,7 @@ const Results: React.FC = () => {
   }, [humanInput, serializedData]);
 
   const handlePrevious = useCallback(() => {
-    router.push('/prioridades');
+    router.push('/ahp/prioridades');
   }, [router]);
 
   return (

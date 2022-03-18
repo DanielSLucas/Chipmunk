@@ -20,10 +20,10 @@ import {
   attributesState,
   attributesPrioritiesState,
   humanInputState,
-} from '../atoms/attributesAtom';
+} from '../../atoms/attributesAtom';
 
-import PrioritiesForm from '../components/PrioritiesForm';
-import RankAttributes from '../components/RankAttributes';
+import PrioritiesForm from '../../components/PrioritiesForm';
+import RankAttributes from '../../components/RankAttributes';
 
 const Priorities: React.FC = () => {
   const attributesPrioritiesTable = useRecoilValue(attributesPrioritiesState);
@@ -33,7 +33,7 @@ const Priorities: React.FC = () => {
   const router = useRouter();
 
   const handlePrevious = useCallback(() => {
-    router.push('/');
+    router.push('/ahp');
   }, [router]);
 
   const handleNext = useCallback(() => {
@@ -46,7 +46,7 @@ const Priorities: React.FC = () => {
       attributesPrioritiesTable,
     });
 
-    router.push('/resultado');
+    router.push('/ahp/resultado');
   }, [router, attributes, attributesPrioritiesTable, setHumanInput]);
 
   const isTheFormFilled = !attributesPrioritiesTable
