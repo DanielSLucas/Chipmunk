@@ -82,20 +82,29 @@ const DataUpload: React.FC = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
-    <Flex direction="column">
+    <Flex
+      direction="column"
+      // bg="white"
+      p="8"
+      // borderWidth="1px"
+      // borderColor="gray.300"
+      // borderRadius="md"
+      mt="4"
+    >
       <Flex direction="column" alignItems="center">
         <Flex
           {...getRootProps()}
           direction="column"
           alignItems="center"
           justifyContent="center"
-          w="md"
+          w={['18rem', 'md']}
           marginX="4"
           bg="gray.100"
-          mt="8"
+          // mt="8"
           p="4"
+          border="dashed"
           borderWidth="1px"
-          borderColor="gray.100"
+          borderColor="black"
           borderRadius="md"
         >
           <input {...getInputProps()} multiple={false} />

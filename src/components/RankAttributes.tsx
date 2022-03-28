@@ -162,7 +162,8 @@ const RankAttributes: React.FC = () => {
                       <Flex
                         flex="1"
                         ml="2"
-                        alignItems="center"
+                        alignItems={['flex-start', 'center']}
+                        direction={['column', 'row']}
                         justifyContent="space-between"
                       >
                         <Tag>{attribute.name.toUpperCase()}</Tag>

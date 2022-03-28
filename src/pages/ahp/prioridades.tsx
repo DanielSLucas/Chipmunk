@@ -56,7 +56,7 @@ const Priorities: React.FC = () => {
     .includes(true);
 
   return (
-    <Flex flex="1" justifyContent="center" overflowY="hidden">
+    <Flex flex="1" justifyContent="center">
       <Flex direction="column" borderRadius="md" p="2" mt="40" maxW="xl">
         <Flex as="header" direction="column">
           <Heading as="h2">Prioridades</Heading>
@@ -65,37 +65,39 @@ const Priorities: React.FC = () => {
           </Text>
         </Flex>
 
-        <Accordion allowToggle mt="4" w="xl">
-          <AccordionItem>
-            <h3>
-              <AccordionButton bg="white">
-                <Box flex="1" textAlign="left">
-                  Rakeamento de atributos
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h3>
-            <AccordionPanel pb={4}>
-              <RankAttributes />
-            </AccordionPanel>
-          </AccordionItem>
+        <Flex justify="center">
+          <Accordion allowToggle mt="4" w={['18rem', 'md', 'xl']}>
+            <AccordionItem>
+              <h3>
+                <AccordionButton bg="white">
+                  <Box flex="1" textAlign="left">
+                    Rakeamento de atributos
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h3>
+              <AccordionPanel pb={4}>
+                <RankAttributes />
+              </AccordionPanel>
+            </AccordionItem>
 
-          <AccordionItem>
-            <h3>
-              <AccordionButton bg="white">
-                <Box flex="1" textAlign="left">
-                  Comparações detalhada entre atributos
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h3>
-            <AccordionPanel pb={4}>
-              <PrioritiesForm />
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+            <AccordionItem>
+              <h3>
+                <AccordionButton bg="white">
+                  <Box flex="1" textAlign="left">
+                    Comparações detalhada entre atributos
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h3>
+              <AccordionPanel pb={4}>
+                <PrioritiesForm />
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </Flex>
 
-        <Flex as="footer" mt="8" w="xl" justifyContent="space-between">
+        <Flex as="footer" mt="8" justifyContent="space-between">
           <Button onClick={handlePrevious}>
             <Icon mr="2" as={FiArrowLeft} h="6" w="6" />
             Dados

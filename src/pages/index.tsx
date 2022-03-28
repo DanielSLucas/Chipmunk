@@ -72,7 +72,7 @@ const Home: React.FC = () => {
 
   return (
     <Flex flex="1" justifyContent="center" alignItems="center">
-      <Flex w="4xl">
+      <Flex w="6xl" direction={['column', 'column', 'row']} paddingX="8">
         {/* Left side */}
         <Flex as="section" direction="column">
           <Flex as="header" direction="column">
@@ -110,12 +110,26 @@ const Home: React.FC = () => {
           </Flex>
         </Flex>
 
-        <Box h="md" marginX="16" paddingY="6">
+        <Box
+          sx={{
+            '@media (max-width: 770px)': {
+              display: 'none',
+            },
+          }}
+          h="md"
+          marginX={['4', '8', '16']}
+          paddingY="6"
+        >
           <Divider borderColor="gray.400" orientation="vertical" />
         </Box>
 
         {/* Right side */}
-        <Flex as="section" direction="column" justifyContent="center">
+        <Flex
+          as="section"
+          direction="column"
+          justifyContent="center"
+          mt={['6', '6', '0']}
+        >
           <Flex as="article" direction="column">
             <Heading as="h3">{selectedStatisticalMethod.title}</Heading>
             <Text align="justify" mt="4">
