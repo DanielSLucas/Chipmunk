@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { animated, useTransition } from 'react-spring';
 import { Flex } from '@chakra-ui/react';
 
@@ -9,9 +9,27 @@ import Results from './innerPages/resultado';
 export type PageNames = 'data' | 'priorities' | 'results';
 
 const Ahp: React.FC = () => {
-  const changeVisiblePage = useCallback((pageName: PageNames) => {
-    setPages([pageName]);
-  }, []);
+  const [pagesNames, setPages] = useState<PageNames[]>(['data']);
+  const [direction, setDirection] = useState<number>(1);
+
+  const changeVisiblePage = useCallback(
+    (pageName: PageNames) => {
+      const currentPage = pagesNames[0];
+      const targetPage = pageName;
+      let newDirection = 1;
+
+      if (
+        targetPage === 'data' ||
+        (targetPage === 'priorities' && currentPage === 'results')
+      ) {
+        newDirection = -1;
+      }
+
+      setDirection(newDirection);
+      setPages([pageName]);
+    },
+    [pagesNames],
+  );
 
   const getPage = useCallback(
     (pageName: PageNames) => {
@@ -26,29 +44,21 @@ const Ahp: React.FC = () => {
     [changeVisiblePage],
   );
 
-  const [pagesNames, setPages] = useState<PageNames[]>([]);
   const transitions = useTransition(pagesNames, {
     from: {
       opacity: 0,
-      position: 'absolute',
-      top: '-100%',
+      top: `${-100 * direction}%`,
     },
     enter: {
       opacity: 1,
-      position: 'absolute',
       top: '0',
     },
     leave: {
       opacity: 0,
-      position: 'absolute',
-      top: '100%',
+      top: `${100 * direction}%`,
     },
     delay: 500,
   });
-
-  useEffect(() => {
-    setPages(['data']);
-  }, []);
 
   return (
     <Flex
@@ -58,7 +68,15 @@ const Ahp: React.FC = () => {
       overflow="hidden"
     >
       {transitions((styles, page) => (
-        <animated.div style={styles}>{getPage(page)}</animated.div>
+        <animated.div
+          style={{
+            opacity: styles.opacity,
+            position: 'absolute',
+            top: styles.top,
+          }}
+        >
+          {getPage(page)}
+        </animated.div>
       ))}
     </Flex>
   );
