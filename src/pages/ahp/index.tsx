@@ -1,70 +1,65 @@
-/* eslint-disable no-nested-ternary */
-import React, { useCallback } from 'react';
-import { Flex, Text, Icon, Button, Heading } from '@chakra-ui/react';
+import { useCallback, useEffect, useState } from 'react';
+import { animated, useTransition } from 'react-spring';
+import { Flex } from '@chakra-ui/react';
 
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
-import DataUpload from '../../components/DataUpload';
-import { serializedDataState } from '../../atoms/serializedDataAtom';
+import Data from './innerPages/dados';
+import Priorities from './innerPages/prioridades';
+import Results from './innerPages/resultado';
+
+export type PageNames = 'data' | 'priorities' | 'results';
 
 const Ahp: React.FC = () => {
-  const serializedData = useRecoilValue(serializedDataState);
-  const router = useRouter();
+  const changeVisiblePage = useCallback((pageName: PageNames) => {
+    setPages([pageName]);
+  }, []);
 
-  const handlePrevious = useCallback(() => {
-    router.push('/');
-  }, [router]);
+  const getPage = useCallback(
+    (pageName: PageNames) => {
+      const components = {
+        data: <Data goToPage={changeVisiblePage} />,
+        priorities: <Priorities goToPage={changeVisiblePage} />,
+        results: <Results goToPage={changeVisiblePage} />,
+      };
 
-  const handleNext = useCallback(() => {
-    router.push('/ahp/prioridades');
-  }, [router]);
+      return components[pageName] || components.data;
+    },
+    [changeVisiblePage],
+  );
+
+  const [pagesNames, setPages] = useState<PageNames[]>([]);
+  const transitions = useTransition(pagesNames, {
+    from: {
+      opacity: 0,
+      position: 'absolute',
+      top: '-100%',
+    },
+    enter: {
+      opacity: 1,
+      position: 'absolute',
+      top: '0',
+    },
+    leave: {
+      opacity: 0,
+      position: 'absolute',
+      top: '100%',
+    },
+    delay: 500,
+  });
+
+  useEffect(() => {
+    setPages(['data']);
+  }, []);
 
   return (
-    <Flex flex="1" justifyContent="center">
-      <Flex
-        direction="column"
-        w="100%"
-        borderRadius="md"
-        p="2"
-        mt="40"
-        maxW="xl"
-      >
-        <Flex as="header" direction="column">
-          <Heading as="h2">Dados</Heading>
-          <Text mt="2">Insira um arquivo csv no seguinte formato:</Text>
-        </Flex>
-
-        <Flex justifyContent="center">
-          <Text
-            as="pre"
-            p="4"
-            mt="8"
-            bg="gray.50"
-            w="fit-content"
-            borderRadius="sm"
-          >
-            ,preco,potencia{'\n'}moto1,10000,250{'\n'}moto2,8500,160
-          </Text>
-        </Flex>
-
-        <DataUpload />
-
-        <Flex as="footer" mt="8" justifyContent="space-between">
-          <Button onClick={handlePrevious}>
-            <Icon mr="2" as={FiArrowLeft} h="6" w="6" />
-            Voltar
-          </Button>
-
-          <Button
-            onClick={handleNext}
-            disabled={Object.keys(serializedData).length === 0}
-          >
-            Prioridades
-            <Icon ml="2" as={FiArrowRight} h="6" w="6" />
-          </Button>
-        </Flex>
-      </Flex>
+    <Flex
+      flex="1"
+      justifyContent="center"
+      position="relative"
+      overflow="hidden"
+    >
+      {transitions((styles, page) => (
+        <animated.div style={styles}>{getPage(page)}</animated.div>
+      ))}
     </Flex>
   );
 };

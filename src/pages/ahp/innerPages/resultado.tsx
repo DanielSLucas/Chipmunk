@@ -14,12 +14,13 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
-import { humanInputState } from '../../atoms/attributesAtom';
-import { serializedDataState } from '../../atoms/serializedDataAtom';
+import { humanInputState } from '../../../atoms/attributesAtom';
+import { serializedDataState } from '../../../atoms/serializedDataAtom';
+import { PageNames } from '..';
 
 type DecisionItem = {
   priority: number;
@@ -27,8 +28,11 @@ type DecisionItem = {
   [key: string]: any;
 };
 
-const Results: React.FC = () => {
-  const router = useRouter();
+type ResultsProps = {
+  goToPage(pageName: PageNames): void;
+};
+
+const Results: React.FC<ResultsProps> = ({ goToPage }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [decision, setDecision] = useState<DecisionItem[]>([]);
   const [decisionItemAttributes, setDecisionItemAttributes] = useState<
@@ -77,8 +81,8 @@ const Results: React.FC = () => {
   }, [humanInput, serializedData]);
 
   const handlePrevious = useCallback(() => {
-    router.push('/ahp/prioridades');
-  }, [router]);
+    goToPage('priorities');
+  }, [goToPage]);
 
   return (
     <Flex flex="1" justifyContent="center">

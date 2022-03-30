@@ -11,7 +11,7 @@ import {
   Icon,
   Text,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+
 import React, { useCallback } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -20,21 +20,24 @@ import {
   attributesState,
   attributesPrioritiesState,
   humanInputState,
-} from '../../atoms/attributesAtom';
+} from '../../../atoms/attributesAtom';
 
-import PrioritiesForm from '../../components/PrioritiesForm';
-import RankAttributes from '../../components/RankAttributes';
+import PrioritiesForm from '../../../components/PrioritiesForm';
+import RankAttributes from '../../../components/RankAttributes';
+import { PageNames } from '..';
 
-const Priorities: React.FC = () => {
+type PrioritiesProps = {
+  goToPage(pageName: PageNames): void;
+};
+
+const Priorities: React.FC<PrioritiesProps> = ({ goToPage }) => {
   const attributesPrioritiesTable = useRecoilValue(attributesPrioritiesState);
   const attributes = useRecoilValue(attributesState);
   const [, setHumanInput] = useRecoilState(humanInputState);
 
-  const router = useRouter();
-
   const handlePrevious = useCallback(() => {
-    router.push('/ahp');
-  }, [router]);
+    goToPage('data');
+  }, [goToPage]);
 
   const handleNext = useCallback(() => {
     const attributesInfo = Array.from(attributes).sort(
@@ -46,8 +49,8 @@ const Priorities: React.FC = () => {
       attributesPrioritiesTable,
     });
 
-    router.push('/ahp/resultado');
-  }, [router, attributes, attributesPrioritiesTable, setHumanInput]);
+    goToPage('results');
+  }, [attributes, setHumanInput, attributesPrioritiesTable, goToPage]);
 
   const isTheFormFilled = !attributesPrioritiesTable
     .map(row => {
