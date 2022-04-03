@@ -5,9 +5,9 @@ import { Flex, Text, Icon, Button, Heading } from '@chakra-ui/react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import DataUpload from '../../../components/DataUpload';
-import { serializedDataState } from '../../../atoms/serializedDataAtom';
-import { PageNames } from '..';
+import DataUpload from '../DataUpload';
+import { serializedDataState } from '../../atoms/serializedDataAtom';
+import { PageNames } from '../../pages/ahp';
 
 type DataProps = {
   goToPage(pageName: PageNames): void;

@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react';
 import { animated, useTransition } from 'react-spring';
 import { Flex } from '@chakra-ui/react';
 
-import Data from './innerPages/dados';
-import Priorities from './innerPages/prioridades';
-import Results from './innerPages/resultado';
+import Data from '../components/ahpInnerPages/dados';
+import Priorities from '../components/ahpInnerPages/prioridades';
+import Results from '../components/ahpInnerPages/resultado';
 
 export type PageNames = 'data' | 'priorities' | 'results';
 

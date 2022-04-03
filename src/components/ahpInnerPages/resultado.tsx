@@ -18,9 +18,9 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
-import { humanInputState } from '../../../atoms/attributesAtom';
-import { serializedDataState } from '../../../atoms/serializedDataAtom';
-import { PageNames } from '..';
+import { humanInputState } from '../../atoms/attributesAtom';
+import { serializedDataState } from '../../atoms/serializedDataAtom';
+import { PageNames } from '../../pages/ahp';
 
 type DecisionItem = {
   priority: number;

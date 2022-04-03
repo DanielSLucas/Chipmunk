@@ -20,11 +20,11 @@ import {
   attributesState,
   attributesPrioritiesState,
   humanInputState,
-} from '../../../atoms/attributesAtom';
+} from '../../atoms/attributesAtom';
 
-import PrioritiesForm from '../../../components/PrioritiesForm';
-import RankAttributes from '../../../components/RankAttributes';
-import { PageNames } from '..';
+import PrioritiesForm from '../PrioritiesForm';
+import RankAttributes from '../RankAttributes';
+import { PageNames } from '../../pages/ahp';
 
 type PrioritiesProps = {
   goToPage(pageName: PageNames): void;
