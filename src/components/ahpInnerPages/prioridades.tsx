@@ -60,7 +60,7 @@ const Priorities: React.FC<PrioritiesProps> = ({ goToPage }) => {
 
   return (
     <Flex flex="1" justifyContent="center">
-      <Flex direction="column" borderRadius="md" p="2" mt="40" maxW="xl">
+      <Flex direction="column" borderRadius="md" p="2" mt="24" maxW="xl">
         <Flex as="header" direction="column">
           <Heading as="h2">Prioridades</Heading>
           <Text mt="2">
@@ -101,12 +101,16 @@ const Priorities: React.FC<PrioritiesProps> = ({ goToPage }) => {
         </Flex>
 
         <Flex as="footer" mt="8" justifyContent="space-between">
-          <Button onClick={handlePrevious}>
+          <Button onClick={handlePrevious} colorScheme="blue">
             <Icon mr="2" as={FiArrowLeft} h="6" w="6" />
             Dados
           </Button>
 
-          <Button onClick={handleNext} disabled={!isTheFormFilled}>
+          <Button
+            onClick={handleNext}
+            disabled={!isTheFormFilled}
+            colorScheme="blue"
+          >
             Resultado
             <Icon ml="2" as={FiArrowRight} h="6" w="6" />
           </Button>

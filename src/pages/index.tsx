@@ -95,6 +95,7 @@ const Home: React.FC = () => {
                     <Link
                       as="button"
                       onClick={() => setSelectedStatisticalMethod(item)}
+                      textDecorationColor="blue.600"
                       textDecor={
                         item.name === selectedStatisticalMethod.name
                           ? 'underline'
@@ -124,6 +125,7 @@ const Home: React.FC = () => {
         </Box>
 
         {/* Right side */}
+
         <Flex
           as="section"
           direction="column"
@@ -138,7 +140,7 @@ const Home: React.FC = () => {
           </Flex>
 
           <Flex as="footer" mt="16" justifyContent="center">
-            <Button onClick={handleTestIt}>
+            <Button onClick={handleTestIt} colorScheme="blue">
               Testar
               <Icon ml="2" as={FiArrowRight} h="6" w="6" />
             </Button>

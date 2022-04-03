@@ -91,7 +91,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
         w="100%"
         borderRadius="md"
         p="2"
-        mt="40"
+        mt="24"
         maxW="xl"
       >
         <Flex as="header" direction="column">
@@ -156,7 +156,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
         </Flex>
 
         <Flex as="footer" mt="8" justifyContent="flex-start">
-          <Button onClick={handlePrevious}>
+          <Button onClick={handlePrevious} colorScheme="blue">
             <Icon mr="2" as={FiArrowLeft} h="6" w="6" />
             Prioridades
           </Button>

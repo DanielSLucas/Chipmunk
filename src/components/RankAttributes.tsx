@@ -208,6 +208,7 @@ const RankAttributes: React.FC = () => {
           alignItems="center"
           onClick={handleEndOfRanking}
           disabled={isLoading}
+          colorScheme="blue"
         >
           {isLoading ? <Spinner /> : 'Enviar dados'}
         </Button>

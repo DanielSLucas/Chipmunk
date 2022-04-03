@@ -10,8 +10,10 @@ export type PageNames = 'data' | 'priorities' | 'results';
 
 const Ahp: React.FC = () => {
   const [pagesNames, setPages] = useState<PageNames[]>(['data']);
+  // 1 = pages goes down | -1 = pages goes up
   const [direction, setDirection] = useState<number>(1);
 
+  // changes to the page passed in the params
   const changeVisiblePage = useCallback(
     (pageName: PageNames) => {
       const currentPage = pagesNames[0];
@@ -31,6 +33,7 @@ const Ahp: React.FC = () => {
     [pagesNames],
   );
 
+  // Returns the right component based on page name
   const getPage = useCallback(
     (pageName: PageNames) => {
       const components = {
@@ -44,6 +47,7 @@ const Ahp: React.FC = () => {
     [changeVisiblePage],
   );
 
+  // animatiosn
   const transitions = useTransition(pagesNames, {
     from: {
       opacity: 0,

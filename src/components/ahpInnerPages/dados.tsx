@@ -32,7 +32,7 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
         w="100%"
         borderRadius="md"
         p="2"
-        mt="40"
+        mt="20"
         maxW="xl"
       >
         <Flex as="header" direction="column">
@@ -45,7 +45,8 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
             as="pre"
             p="4"
             mt="8"
-            bg="gray.50"
+            // bg="gray.50"
+            bg="rgba(255,255,255,0.9)"
             w="fit-content"
             borderRadius="sm"
           >
@@ -55,13 +56,14 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
 
         <DataUpload />
 
-        <Flex as="footer" mt="8" justifyContent="space-between">
-          <Button onClick={handlePrevious}>
+        <Flex as="footer" mt="4" justifyContent="space-between">
+          <Button onClick={handlePrevious} colorScheme="blue">
             <Icon mr="2" as={FiArrowLeft} h="6" w="6" />
             Voltar
           </Button>
 
           <Button
+            colorScheme="blue"
             onClick={handleNext}
             disabled={Object.keys(serializedData).length === 0}
           >
