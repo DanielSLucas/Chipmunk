@@ -311,7 +311,10 @@ function decide(attributesInfo, ponderationInfo, serializedItems) {
  * @param {HumanInput} humanInput
  * @returns {Object[]} An array ordered by priority, starting by the best decision to the worst.
  */
-function ahp(serializedData, humanInput) {
+function ahp(data, humanInput) {
+
+  const serializedData = serializeData(data);
+
   const ponderationInfo = ponderation(humanInput.attributesPrioritiesTable);
 
   const attributesInfo = getAttributesInfo(serializedData, humanInput.attributes);

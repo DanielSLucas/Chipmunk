@@ -8,9 +8,9 @@ export default async function decide(
   const { method, body } = request;
 
   if (method === 'POST') {
-    const { serializedData, humanInput } = body;
+    const { data, humanInput } = body;
 
-    const ahpDecision = ahp(serializedData, humanInput);
+    const ahpDecision = ahp(data, humanInput);
 
     return response.status(200).json(ahpDecision);
   }

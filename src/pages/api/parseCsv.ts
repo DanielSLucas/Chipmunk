@@ -1,10 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  parseCSV,
-  serializeData as serializeDataF,
-} from '../../../public/ahpFunctions.js';
+import { parseCSV } from '../../../public/ahpFunctions.js';
 
-export default async function serializeData(
+export default async function parseCsv(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
@@ -13,9 +10,7 @@ export default async function serializeData(
   if (method === 'POST') {
     const parsedCSV = parseCSV(body.data);
 
-    const serializedData = serializeDataF(parsedCSV);
-
-    return response.status(200).json(serializedData);
+    return response.status(200).json(parsedCSV);
   }
 
   return response.status(400);

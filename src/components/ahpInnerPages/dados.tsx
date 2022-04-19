@@ -6,7 +6,7 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import DataUpload from '../DataUpload';
-import { serializedDataState } from '../../atoms/serializedDataAtom';
+import { DataState } from '../../atoms/serializedDataAtom';
 import { PageNames } from '../../pages/ahp';
 
 type DataProps = {
@@ -14,7 +14,7 @@ type DataProps = {
 };
 
 const Data: React.FC<DataProps> = ({ goToPage }) => {
-  const serializedData = useRecoilValue(serializedDataState);
+  const data = useRecoilValue(DataState);
   const router = useRouter();
 
   const handlePrevious = useCallback(() => {
@@ -65,7 +65,7 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
           <Button
             colorScheme="blue"
             onClick={handleNext}
-            disabled={Object.keys(serializedData).length === 0}
+            disabled={Object.keys(data).length === 0}
           >
             Prioridades
             <Icon ml="2" as={FiArrowRight} h="6" w="6" />

@@ -19,7 +19,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
 import { humanInputState } from '../../atoms/attributesAtom';
-import { serializedDataState } from '../../atoms/serializedDataAtom';
+import { DataState } from '../../atoms/serializedDataAtom';
 import { PageNames } from '../../pages/ahp';
 
 type DecisionItem = {
@@ -39,7 +39,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
     string[]
   >([]);
 
-  const serializedData = useRecoilValue(serializedDataState);
+  const data = useRecoilValue(DataState);
   const humanInput = useRecoilValue(humanInputState);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          serializedData,
+          data,
           humanInput,
         }),
       });
@@ -78,7 +78,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
     });
 
     setIsLoading(false);
-  }, [humanInput, serializedData]);
+  }, [humanInput, data]);
 
   const handlePrevious = useCallback(() => {
     goToPage('priorities');

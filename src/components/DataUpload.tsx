@@ -11,12 +11,12 @@ import {
   prioritiesTypesState,
 } from '../atoms/attributesAtom';
 
-import { serializedDataState } from '../atoms/serializedDataAtom';
+import { DataState } from '../atoms/serializedDataAtom';
 
 const DataUpload: React.FC = () => {
   const toast = useToast();
   const [file, setFile] = useState({} as File);
-  const [, setSerializedData] = useRecoilState(serializedDataState);
+  const [, setData] = useRecoilState(DataState);
   const [, setAttributesPriorities] = useRecoilState(attributesPrioritiesState);
   const [, setAttributesNames] = useRecoilState(attributesNamesState);
   const [, setPrioritiesTypes] = useRecoilState(prioritiesTypesState);
@@ -31,7 +31,7 @@ const DataUpload: React.FC = () => {
     try {
       const data = await file.text();
 
-      const response = await fetch('/api/serializeData', {
+      const response = await fetch('/api/parseCsv', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,12 +41,11 @@ const DataUpload: React.FC = () => {
         }),
       });
 
-      const jsonResponse = await response.json();
+      const jsonResponse: any[][] = await response.json();
 
-      setSerializedData(jsonResponse);
+      setData(jsonResponse);
 
-      const attributes = Object.keys(jsonResponse.attributesValues);
-      attributes.shift();
+      const attributes = jsonResponse[0].slice(1, jsonResponse[0].length);
 
       setAttributesNames(attributes);
 
@@ -73,7 +72,7 @@ const DataUpload: React.FC = () => {
     }
   }, [
     file,
-    setSerializedData,
+    setData,
     setAttributesPriorities,
     setPrioritiesTypes,
     setAttributesNames,
