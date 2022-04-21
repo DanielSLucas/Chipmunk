@@ -1578,6 +1578,11 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+chipmunk-statistics-lib@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/chipmunk-statistics-lib/-/chipmunk-statistics-lib-1.1.5.tgz#e5f68e12894fdebe1474389aa62d979ff91c6753"
+  integrity sha512-i//oIyuE/pkj37aE+hlhrp+uxS3RcSfHJmWCQ/sIyoQuGeUBFcOUlFvmIYQYrhXTZoxQFMDfkbR8/3VXOkjtvw==
+
 chokidar@3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"

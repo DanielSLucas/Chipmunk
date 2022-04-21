@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { parseCSV } from '../../../public/ahpFunctions.js';
 
 export default async function parseCsv(
   request: NextApiRequest,
@@ -8,7 +7,9 @@ export default async function parseCsv(
   const { method, body } = request;
 
   if (method === 'POST') {
-    const parsedCSV = parseCSV(body.data);
+    const rows = body.data.split('\n');
+
+    const parsedCSV = rows.map((row: string) => row.split(','));
 
     return response.status(200).json(parsedCSV);
   }

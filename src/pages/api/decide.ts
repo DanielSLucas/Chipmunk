@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ahp } from '../../../public/ahpFunctions.js';
+import { ahp } from 'chipmunk-statistics-lib';
 
 export default async function decide(
   request: NextApiRequest,

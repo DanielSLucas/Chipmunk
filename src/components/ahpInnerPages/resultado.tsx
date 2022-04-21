@@ -22,22 +22,13 @@ import { humanInputState } from '../../atoms/attributesAtom';
 import { DataState } from '../../atoms/serializedDataAtom';
 import { PageNames } from '../../pages/ahp';
 
-type DecisionItem = {
-  priority: number;
-  isTheBestDecision: boolean;
-  [key: string]: any;
-};
-
 type ResultsProps = {
   goToPage(pageName: PageNames): void;
 };
 
 const Results: React.FC<ResultsProps> = ({ goToPage }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [decision, setDecision] = useState<DecisionItem[]>([]);
-  const [decisionItemAttributes, setDecisionItemAttributes] = useState<
-    string[]
-  >([]);
+  const [decision, setDecision] = useState<Record<string, any>>({});
 
   const data = useRecoilValue(DataState);
   const humanInput = useRecoilValue(humanInputState);
@@ -60,21 +51,9 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
       return jsonResponse;
     };
 
-    const getObjAttributes = (arr: any[]) => {
-      const attribs = Object.keys(arr[0]);
-
-      const priorityAttIndex = attribs.findIndex(
-        attrib => attrib === 'priority',
-      );
-
-      attribs.splice(priorityAttIndex, 1);
-
-      return ['priority', ...attribs];
-    };
-
     getDecision().then(response => {
-      setDecisionItemAttributes(getObjAttributes(response));
-      setDecision(response);
+      console.log(response);
+      setDecision(response.decision);
     });
 
     setIsLoading(false);
@@ -114,42 +93,19 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
             <Table variant="simple" size="sm">
               <Thead>
                 <Tr>
-                  {decisionItemAttributes.map((attribute, i) => {
-                    if (attribute === 'isTheBestDecision') return null;
-
-                    return <Th key={`${attribute}[${i}]`}>{attribute}</Th>;
+                  {Object.keys(decision).map((key, i) => {
+                    return <Th key={`${key}[${i}]`}>{key}</Th>;
                   })}
                 </Tr>
               </Thead>
               <Tbody>
-                {decision.map((item, i) => {
-                  return (
-                    <Tr
-                      bg={item.isTheBestDecision ? 'green.100' : 'inherit'}
-                      color={item.isTheBestDecision ? 'green.800' : 'inherit'}
-                      fontWeight={item.isTheBestDecision ? 'bold' : 'inherit'}
-                      key={`${item}-[${i}]`}
-                    >
-                      {decisionItemAttributes.map((attribute, j) => {
-                        if (attribute === 'isTheBestDecision') return null;
-
-                        const value =
-                          attribute === 'priority'
-                            ? `${Number(item[attribute] * 100).toFixed(2)}%`
-                            : item[attribute];
-
-                        return (
-                          <Td
-                            key={`${item}[${attribute}]-[${i}][${j}]`}
-                            isNumeric={Number.isInteger(value)}
-                          >
-                            {value}
-                          </Td>
-                        );
-                      })}
-                    </Tr>
-                  );
-                })}
+                <Tr bg="green.100" color="green.800" fontWeight="bold">
+                  {Object.keys(decision).map((key, i) => {
+                    return (
+                      <Td key={`${decision[key]}-[${i}]`}>{decision[key]}</Td>
+                    );
+                  })}
+                </Tr>
               </Tbody>
             </Table>
           )}
