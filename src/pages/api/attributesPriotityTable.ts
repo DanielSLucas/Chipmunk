@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createAttributesPriotityTable } from '../../../public/ahpFunctions.js';
+import { createAttributesPriotityTable } from 'chipmunk-statistics-lib/lib/ahp/utils';
 
 export default async function attributesPriotityTable(
   request: NextApiRequest,

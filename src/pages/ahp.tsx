@@ -69,7 +69,7 @@ const Ahp: React.FC = () => {
       flex="1"
       justifyContent="center"
       position="relative"
-      overflow="hidden"
+      // overflow="hidden"
     >
       {transitions((styles, page) => (
         <animated.div
