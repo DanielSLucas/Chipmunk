@@ -21,7 +21,7 @@ import {
   attributesPrioritiesState,
   attributesState,
   prioritiesTypesState,
-} from '../atoms/attributesAtom';
+} from '../atoms/ahp/attributesAtom';
 
 type BetterWhen = 'greater' | 'lesser';
 type Fields = 'betterWhen' | 'name';

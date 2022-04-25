@@ -33,7 +33,7 @@ const statisticalMethods = [
   },
   {
     name: 'ANOVA',
-    title: 'Análise de váriância',
+    title: 'Análise de variância',
     content:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
     route: '/anova',

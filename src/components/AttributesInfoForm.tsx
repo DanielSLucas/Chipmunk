@@ -3,7 +3,10 @@
 import { Flex, Text, Tag, Box, Select, Stack } from '@chakra-ui/react';
 import React, { useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { attributesState, attributesNamesState } from '../atoms/attributesAtom';
+import {
+  attributesState,
+  attributesNamesState,
+} from '../atoms/ahp/attributesAtom';
 
 type BetterWhen = 'greater' | 'lesser' | string;
 type Fields = 'betterWhen' | 'name';

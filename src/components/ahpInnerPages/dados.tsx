@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
 import { PageNames } from '../../pages/ahp';
-import { DataState } from '../../atoms/serializedDataAtom';
+import { DataState } from '../../atoms/ahp/serializedDataAtom';
 import {
   attributesNamesState,
   attributesPrioritiesState,
   prioritiesTypesState,
-} from '../../atoms/attributesAtom';
+} from '../../atoms/ahp/attributesAtom';
 
 import DataUpload from '../DataUpload';
 

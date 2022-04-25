@@ -20,8 +20,8 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft, FiDownload } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
-import { humanInputState } from '../../atoms/attributesAtom';
-import { DataState } from '../../atoms/serializedDataAtom';
+import { humanInputState } from '../../atoms/ahp/attributesAtom';
+import { DataState } from '../../atoms/ahp/serializedDataAtom';
 import { PageNames } from '../../pages/ahp';
 
 type ResultsProps = {

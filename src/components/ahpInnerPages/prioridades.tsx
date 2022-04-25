@@ -20,7 +20,7 @@ import {
   attributesState,
   attributesPrioritiesState,
   humanInputState,
-} from '../../atoms/attributesAtom';
+} from '../../atoms/ahp/attributesAtom';
 
 import PrioritiesForm from '../PrioritiesForm';
 import RankAttributes from '../RankAttributes';

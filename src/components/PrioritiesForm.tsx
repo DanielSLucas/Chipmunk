@@ -6,7 +6,7 @@ import {
   attributesPrioritiesState,
   attributesNamesState,
   prioritiesTypesState,
-} from '../atoms/attributesAtom';
+} from '../atoms/ahp/attributesAtom';
 import AttributePriorityForm from './AttributePriorityForm';
 
 type IPriorityType = 'superior' | 'inferior';
