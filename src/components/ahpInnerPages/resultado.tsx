@@ -45,7 +45,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
 
   useEffect(() => {
     const getDecision = async () => {
-      const response = await fetch('/api/decide', {
+      const response = await fetch('/api/ahp/decide', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
   }, [goToPage]);
 
   const handleDownload = useCallback(async () => {
-    const response = await fetch('/api/generateAhpRecordsHtml', {
+    const response = await fetch('/api/ahp/generateAhpRecordsHtml', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

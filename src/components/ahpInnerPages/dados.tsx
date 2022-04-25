@@ -38,7 +38,7 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
   async function handleDataUpload(file: File): Promise<void> {
     const fileData = await file.text();
 
-    const response = await fetch('/api/parseCsv', {
+    const response = await fetch('/api/ahp/parseCsv', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

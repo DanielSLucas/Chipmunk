@@ -90,7 +90,7 @@ const RankAttributes: React.FC = () => {
       attribute => attribute.name,
     );
 
-    const response = await fetch('/api/attributesPriotityTable', {
+    const response = await fetch('/api/ahp/attributesPriotityTable', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
