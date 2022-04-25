@@ -132,7 +132,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
             <Spinner />
           ) : (
             <>
-              <Text ml="4">
+              <Text ml="2">
                 Prioridade:{' '}
                 <Badge
                   colorScheme={
@@ -148,14 +148,14 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
               </Text>
               <Table variant="simple" size="sm" mt="4">
                 <Thead>
-                  <Tr>
+                  <Tr bg="gray.100">
                     {Object.keys(decision).map((key, i) => {
                       return <Th key={`${key}[${i}]`}>{key}</Th>;
                     })}
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr bg="green.100" color="green.800" fontWeight="bold">
+                  <Tr>
                     {Object.keys(decision).map((key, i) => {
                       return (
                         <Td key={`${decision[key]}-[${i}]`}>{decision[key]}</Td>
@@ -166,7 +166,7 @@ const Results: React.FC<ResultsProps> = ({ goToPage }) => {
               </Table>
               <Button mt="4" onClick={handleDownload} colorScheme="blue">
                 <Icon mr="2" as={FiDownload} h="6" w="6" />
-                Calculos
+                Cálculos
               </Button>
             </>
           )}
