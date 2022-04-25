@@ -1,5 +1,5 @@
 {
-  "name": "food-routine",
+  "name": "chipmunk",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "chipmunk-statistics-lib": "^1.1.8",
+    "chipmunk-statistics-lib": "^1.1.11",
     "framer-motion": "^4",
     "next": "12.0.7",
     "react": "17.0.2",
