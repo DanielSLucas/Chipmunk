@@ -4,22 +4,14 @@ import { Button, Flex, Icon, Spinner, Text, useToast } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiFileText } from 'react-icons/fi';
-import { useRecoilState } from 'recoil';
-import {
-  attributesPrioritiesState,
-  attributesNamesState,
-  prioritiesTypesState,
-} from '../atoms/attributesAtom';
 
-import { DataState } from '../atoms/serializedDataAtom';
+interface DataUploadProps {
+  handleDataUpload(file: File): Promise<void>;
+}
 
-const DataUpload: React.FC = () => {
+const DataUpload: React.FC<DataUploadProps> = ({ handleDataUpload }) => {
   const toast = useToast();
   const [file, setFile] = useState({} as File);
-  const [, setData] = useRecoilState(DataState);
-  const [, setAttributesPriorities] = useRecoilState(attributesPrioritiesState);
-  const [, setAttributesNames] = useRecoilState(attributesNamesState);
-  const [, setPrioritiesTypes] = useRecoilState(prioritiesTypesState);
   const [isLoading, setIsLoading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -29,38 +21,7 @@ const DataUpload: React.FC = () => {
   const handleUpload = useCallback(async () => {
     setIsLoading(true);
     try {
-      const data = await file.text();
-
-      const response = await fetch('/api/parseCsv', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          data,
-        }),
-      });
-
-      const jsonResponse: any[][] = await response.json();
-
-      setData(jsonResponse);
-
-      const attributes = jsonResponse[0].slice(1, jsonResponse[0].length);
-
-      setAttributesNames(attributes);
-
-      const initialAttributesPriorities = attributes.map((_item1, i) => {
-        return attributes.map((_item2, j) => {
-          if (i === j) return 1;
-          return 0;
-        });
-      });
-
-      setPrioritiesTypes(
-        initialAttributesPriorities.map(row => row.map(() => 'superior')),
-      );
-
-      setAttributesPriorities(initialAttributesPriorities);
+      await handleDataUpload(file);
     } catch (error: any) {
       toast({
         title: error.message,
@@ -70,14 +31,7 @@ const DataUpload: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [
-    file,
-    setData,
-    setAttributesPriorities,
-    setPrioritiesTypes,
-    setAttributesNames,
-    toast,
-  ]);
+  }, [file, handleDataUpload, toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (

@@ -1,20 +1,30 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-nested-ternary */
 import React, { useCallback } from 'react';
 import { Flex, Text, Icon, Button, Heading } from '@chakra-ui/react';
-
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
-import DataUpload from '../DataUpload';
-import { DataState } from '../../atoms/serializedDataAtom';
+import { useRecoilState } from 'recoil';
+
 import { PageNames } from '../../pages/ahp';
+import { DataState } from '../../atoms/serializedDataAtom';
+import {
+  attributesNamesState,
+  attributesPrioritiesState,
+  prioritiesTypesState,
+} from '../../atoms/attributesAtom';
+
+import DataUpload from '../DataUpload';
 
 type DataProps = {
   goToPage(pageName: PageNames): void;
 };
 
 const Data: React.FC<DataProps> = ({ goToPage }) => {
-  const data = useRecoilValue(DataState);
+  const [data, setData] = useRecoilState(DataState);
+  const [, setAttributesPriorities] = useRecoilState(attributesPrioritiesState);
+  const [, setAttributesNames] = useRecoilState(attributesNamesState);
+  const [, setPrioritiesTypes] = useRecoilState(prioritiesTypesState);
   const router = useRouter();
 
   const handlePrevious = useCallback(() => {
@@ -24,6 +34,44 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
   const handleNext = useCallback(() => {
     goToPage('priorities');
   }, [goToPage]);
+
+  async function handleDataUpload(file: File): Promise<void> {
+    const fileData = await file.text();
+
+    const response = await fetch('/api/parseCsv', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: fileData,
+      }),
+    });
+
+    const jsonResponse: (string | number)[][] = await response.json();
+
+    setData(jsonResponse);
+
+    const attributes = jsonResponse[0].slice(
+      1,
+      jsonResponse[0].length,
+    ) as string[];
+
+    setAttributesNames(attributes);
+
+    const initialAttributesPriorities = attributes.map((_item1, i) => {
+      return attributes.map((_item2, j) => {
+        if (i === j) return 1;
+        return 0;
+      });
+    });
+
+    setPrioritiesTypes(
+      initialAttributesPriorities.map(row => row.map(() => 'superior')),
+    );
+
+    setAttributesPriorities(initialAttributesPriorities);
+  }
 
   return (
     <Flex flex="1" justifyContent="center">
@@ -45,7 +93,6 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
             as="pre"
             p="4"
             mt="8"
-            // bg="gray.50"
             bg="rgba(255,255,255,0.9)"
             w="fit-content"
             borderRadius="sm"
@@ -54,7 +101,7 @@ const Data: React.FC<DataProps> = ({ goToPage }) => {
           </Text>
         </Flex>
 
-        <DataUpload />
+        <DataUpload handleDataUpload={handleDataUpload} />
 
         <Flex as="footer" mt="4" justifyContent="space-between">
           <Button onClick={handlePrevious} colorScheme="blue">
