@@ -28,7 +28,7 @@ const statisticalMethods = [
     name: 'AHP',
     title: 'Análise hieráquica de processo',
     content:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
+      'O processo hierárquico analítico (AHP) é uma técnica estruturada para organizar e analisar decisões complexas, baseadas em matemática e psicologia. O AHP ele auxilia nas tomadas de decisões, de modo a encontrar a decisão que melhor se adapte ao objetivo proposto. Este tipo de método é bastante utilizado em todo mundo numa variedade de situações de decisão, em áreas como negócios, saúde, educação etc. O AHP pode ser resumido em 5 etapas que são: Modelar o problema, estabelecer as prioridades, sintetizar os julgamentos, verificar a consistência desses julgamentos, e chegar na decisão final.',
     route: '/ahp',
   },
   {
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
     <Flex flex="1" justifyContent="center" alignItems="center">
       <Flex w="6xl" direction={['column', 'column', 'row']} paddingX="8">
         {/* Left side */}
-        <Flex as="section" direction="column">
+        <Flex maxW="md" as="section" direction="column">
           <Flex as="header" direction="column">
             <Heading as="h2">Métodos estatísticos disponíveis</Heading>
             <Text mt="6" align="justify">
@@ -125,8 +125,8 @@ const Home: React.FC = () => {
         </Box>
 
         {/* Right side */}
-
         <Flex
+          maxW="md"
           as="section"
           direction="column"
           justifyContent="center"
