@@ -4,6 +4,7 @@ import { Flex } from '@chakra-ui/react';
 
 import Samples from '../components/anovaInnerPages/amostras';
 import Results from '../components/anovaInnerPages/resultados';
+import SEO from '../components/SEO';
 
 export type AnovaPageNames = 'samples' | 'results';
 
@@ -56,24 +57,27 @@ const Anova: React.FC = () => {
   });
 
   return (
-    <Flex
-      flex="1"
-      justifyContent="center"
-      position="relative"
-      overflow="hidden"
-    >
-      {transitions((styles, page) => (
-        <animated.div
-          style={{
-            opacity: styles.opacity,
-            position: 'absolute',
-            top: styles.top,
-          }}
-        >
-          {getPage(page)}
-        </animated.div>
-      ))}
-    </Flex>
+    <>
+      <SEO title="ANOVA" description="Análise de variância" />
+      <Flex
+        flex="1"
+        justifyContent="center"
+        position="relative"
+        overflow="hidden"
+      >
+        {transitions((styles, page) => (
+          <animated.div
+            style={{
+              opacity: styles.opacity,
+              position: 'absolute',
+              top: styles.top,
+            }}
+          >
+            {getPage(page)}
+          </animated.div>
+        ))}
+      </Flex>
+    </>
   );
 };
 

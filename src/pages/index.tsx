@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 
 import { FiArrowRight } from 'react-icons/fi';
+import SEO from '../components/SEO';
 
 type StatisticalMethod = {
   name: string;
@@ -50,83 +51,106 @@ const Home: React.FC = () => {
   }, [router, selectedStatisticalMethod]);
 
   return (
-    <Flex flex="1" justifyContent="center" alignItems="center">
-      <Flex w="6xl" direction={['column', 'column', 'row']} paddingX="8">
-        {/* Left side */}
-        <Flex maxW="md" as="section" direction="column">
-          <Flex as="header" direction="column">
-            <Heading as="h2">Métodos estatísticos disponíveis</Heading>
-            <Text mt="6" align="justify">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic
-              cumque, dicta facilis impedit corrupti sunt consequatur rerum,
-              tempore quae repudiandae eligendi laborum minus nulla illum
-              quaerat magni recusandae! Ipsa.
-            </Text>
-          </Flex>
-
-          <Flex mt="6">
-            {Array.from({
-              length: Math.ceil(statisticalMethods.length / 5),
-            }).map((_, i) => (
-              <UnorderedList key={`statisticalMethod-${i + 1}`} mr="8">
-                {statisticalMethods.slice(i * 5, i * 5 + 5).map(item => (
-                  <ListItem key={item.name}>
-                    <Link
-                      as="button"
-                      onClick={() => setSelectedStatisticalMethod(item)}
-                      textDecorationColor="blue.600"
-                      textDecor={
-                        item.name === selectedStatisticalMethod.name
-                          ? 'underline'
-                          : ''
-                      }
-                    >
-                      {item.name}
-                    </Link>
-                  </ListItem>
-                ))}
-              </UnorderedList>
-            ))}
-          </Flex>
-        </Flex>
-
-        <Box
+    <>
+      <SEO
+        title="Chipmunk"
+        description="Até um esquilo escolhe as melhores nozes"
+        shouldExludeTitleSuffix
+      />
+      <Flex
+        flex="1"
+        justifyContent="center"
+        alignItems="center"
+        overflowY="scroll"
+      >
+        <Flex
+          w="6xl"
+          direction={['column', 'column', 'row']}
+          paddingX="8"
+          justifyContent={['center', 'center', 'normal']}
+          alignItems={['center', 'center', 'normal']}
           sx={{
-            '@media (max-width: 770px)': {
-              display: 'none',
+            '@media (max-width: 375px)': {
+              paddingTop: '20rem',
             },
           }}
-          h="md"
-          marginX={['4', '8', '16']}
-          paddingY="6"
         >
-          <Divider borderColor="gray.400" orientation="vertical" />
-        </Box>
+          {/* Left side */}
+          <Flex maxW="md" as="section" direction="column">
+            <Flex as="header" direction="column">
+              <Heading as="h2">Métodos estatísticos disponíveis</Heading>
+              <Text mt="6" align="justify">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit
+                hic cumque, dicta facilis impedit corrupti sunt consequatur
+                rerum, tempore quae repudiandae eligendi laborum minus nulla
+                illum quaerat magni recusandae! Ipsa.
+              </Text>
+            </Flex>
 
-        {/* Right side */}
-        <Flex
-          maxW="md"
-          as="section"
-          direction="column"
-          justifyContent="center"
-          mt={['6', '6', '0']}
-        >
-          <Flex as="article" direction="column">
-            <Heading as="h3">{selectedStatisticalMethod.title}</Heading>
-            <Text align="justify" mt="4">
-              {selectedStatisticalMethod.content}
-            </Text>
+            <Flex mt="6">
+              {Array.from({
+                length: Math.ceil(statisticalMethods.length / 5),
+              }).map((_, i) => (
+                <UnorderedList key={`statisticalMethod-${i + 1}`} mr="8">
+                  {statisticalMethods.slice(i * 5, i * 5 + 5).map(item => (
+                    <ListItem key={item.name}>
+                      <Link
+                        as="button"
+                        onClick={() => setSelectedStatisticalMethod(item)}
+                        textDecorationColor="blue.600"
+                        textDecor={
+                          item.name === selectedStatisticalMethod.name
+                            ? 'underline'
+                            : ''
+                        }
+                      >
+                        {item.name}
+                      </Link>
+                    </ListItem>
+                  ))}
+                </UnorderedList>
+              ))}
+            </Flex>
           </Flex>
 
-          <Flex as="footer" mt="16" justifyContent="center">
-            <Button onClick={handleTestIt} colorScheme="blue">
-              Testar
-              <Icon ml="2" as={FiArrowRight} h="6" w="6" />
-            </Button>
+          <Box
+            sx={{
+              '@media (max-width: 770px)': {
+                display: 'none',
+              },
+            }}
+            h="md"
+            marginX={['4', '8', '16']}
+            paddingY="6"
+          >
+            <Divider borderColor="gray.400" orientation="vertical" />
+          </Box>
+
+          {/* Right side */}
+          <Flex
+            maxW="md"
+            as="section"
+            direction="column"
+            justifyContent="center"
+            mt={['6', '6', '0']}
+          >
+            <Flex as="article" direction="column">
+              <Heading as="h3">{selectedStatisticalMethod.title}</Heading>
+              <Text align="justify" mt="4">
+                {selectedStatisticalMethod.content}
+              </Text>
+            </Flex>
+
+            <Flex as="footer" mt="16" justifyContent="center">
+              <Button onClick={handleTestIt} colorScheme="blue">
+                Testar
+                <Icon ml="2" as={FiArrowRight} h="6" w="6" />
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 };
 

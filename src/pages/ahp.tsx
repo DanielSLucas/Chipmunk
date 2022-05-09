@@ -5,6 +5,7 @@ import { Flex } from '@chakra-ui/react';
 import Data from '../components/ahpInnerPages/dados';
 import Priorities from '../components/ahpInnerPages/prioridades';
 import Results from '../components/ahpInnerPages/resultado';
+import SEO from '../components/SEO';
 
 export type PageNames = 'data' | 'priorities' | 'results';
 
@@ -65,24 +66,27 @@ const Ahp: React.FC = () => {
   });
 
   return (
-    <Flex
-      flex="1"
-      justifyContent="center"
-      position="relative"
-      overflow="hidden"
-    >
-      {transitions((styles, page) => (
-        <animated.div
-          style={{
-            opacity: styles.opacity,
-            position: 'absolute',
-            top: styles.top,
-          }}
-        >
-          {getPage(page)}
-        </animated.div>
-      ))}
-    </Flex>
+    <>
+      <SEO title="AHP" description="Análise hieráquica de processo" />
+      <Flex
+        flex="1"
+        justifyContent="center"
+        position="relative"
+        overflow="hidden"
+      >
+        {transitions((styles, page) => (
+          <animated.div
+            style={{
+              opacity: styles.opacity,
+              position: 'absolute',
+              top: styles.top,
+            }}
+          >
+            {getPage(page)}
+          </animated.div>
+        ))}
+      </Flex>
+    </>
   );
 };
 
