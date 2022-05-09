@@ -35,29 +35,8 @@ const statisticalMethods = [
     name: 'ANOVA',
     title: 'Análise de variância',
     content:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
+      'A Análise de Variância (ANOVA) é um teste estatístico que como visão fundamental verificar se existe uma diferença significativa entre as médias de três ou mais amostras independentes e se elas exercem influência em alguma variável dependente. ANOVA auxilia empresas em tratamentos de dados, por exemplo, em uma pesquisa de satisfação, se faz a comparação de vários grupos diferentes de pessoas e comparando suas medias, tentando chegar no satisfatório definido pela empresa ou falhando o processo.',
     route: '/anova',
-  },
-  {
-    name: 'Média',
-    title: 'Média',
-    content:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
-    route: '/media',
-  },
-  {
-    name: 'Moda',
-    title: 'Moda',
-    content:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
-    route: '/moda',
-  },
-  {
-    name: 'Mediana',
-    title: 'Mediana',
-    content:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit hic cumque, dicta facilis impedit corrupti sunt consequatur rerum, tempore quae repudiandae eligendi laborum minus nulla illum quaerat magni recusandae! Ipsa.',
-    route: '/mediana',
   },
 ];
 
