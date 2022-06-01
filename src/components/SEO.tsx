@@ -39,7 +39,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:image:secure_url" content="brand.png" />
       <meta property="og:image:alt" content="Thumbnail" />
       <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:width" content="1323" />
+      <meta property="og:image:width" content="500" />
       <meta property="og:image:height" content="500" />
     </Head>
   );

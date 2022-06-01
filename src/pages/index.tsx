@@ -65,6 +65,7 @@ const Home: React.FC = () => {
       >
         <Flex
           w="6xl"
+          h="md"
           direction={['column', 'column', 'row']}
           paddingX="8"
           justifyContent={['center', 'center', 'normal']}
@@ -80,10 +81,8 @@ const Home: React.FC = () => {
             <Flex as="header" direction="column">
               <Heading as="h2">Métodos estatísticos disponíveis</Heading>
               <Text mt="6" align="justify">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit
-                hic cumque, dicta facilis impedit corrupti sunt consequatur
-                rerum, tempore quae repudiandae eligendi laborum minus nulla
-                illum quaerat magni recusandae! Ipsa.
+                Escolha o método estatístico, forneça as informações solicitadas
+                e com alguns clicks obtenha os resultados e cálculos desejados.
               </Text>
             </Flex>
 
