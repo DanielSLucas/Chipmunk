@@ -1,7 +1,7 @@
 # Chipmunk
 
   O projeto consiste em um sistema que auxilia a tomada de decisão (AHP) e se há
-alguma diferença entre as medianas dos diferentes grupos (ANOVA)
+alguma diferença entre as medianas dos diferentes grupos (ANOVA).
 
   Analytic Hierarchy Process — AHP (Método de Análise Hierárquica) é um método de
 decisão multicritério desenvolvido para ajudar na tomada de decisão a partir de
