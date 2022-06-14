@@ -38,6 +38,7 @@ de métodos estatísticos veja como é simples!
 - [Next.js](https://nextjs.org)
 - [Chakra-ui](https://chakra-ui.com)
 - [Vercel](https://vercel.com)
+- [Chipmunk-statistics-lib](https://github.com/DanielSLucas/chipmunk-statistics-lib)
 
 ## Como Executar o projeto
 
